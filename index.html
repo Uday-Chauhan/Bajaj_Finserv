@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BFHL API Tester</title>
+  <style>
+    body { font-family: sans-serif; margin: 2rem; }
+    button { padding: 10px 15px; font-size: 1rem; }
+    pre { background: #f0f0f0; padding: 1rem; border-radius: 5px; margin-top: 1rem; }
+    input { width: 100%; padding: 0.5rem; margin-top: 10px; font-size: 1rem; }
+  </style>
+</head>
+<body>
+  <h2>BFHL API Test</h2>
+
+  <label for="api-url">Enter your API URL:</label><br/>
+  <input type="text" id="api-url" value="http://localhost:3000/bfhl" />
+
+  <h3>Test Input:</h3>
+  <pre>{
+  "data": ["a", "1", "334", "4", "R", "$"]
+}</pre>
+
+  <button onclick="sendData()">Send Request</button>
+
+  <h3>Response:</h3>
+  <pre id="output">Waiting for response...</pre>
+
+  <script>
+    async function sendData() {
+      const url = document.getElementById("api-url").value.trim();
+
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          data: ["a", "1", "334", "4", "R", "$"]
+        })
+      });
+
+      const result = await res.json();
+      document.getElementById("output").textContent = JSON.stringify(result, null, 2);
+    }
+  </script>
+</body>
+</html>
